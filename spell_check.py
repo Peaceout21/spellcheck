@@ -74,7 +74,7 @@ class Predictquestion(Resource):
             return jsonify(answer=output)
 
     
-api.add_resource(Predictquestion, '/')
+api.add_resource(Predictquestion, '/spellCorrect')
 
 
 if __name__ == '__main__':
