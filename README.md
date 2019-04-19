@@ -35,5 +35,5 @@ curl -X GET http://13.67.40.179:8880/spellCorrect -d query="singimf"
   ]
 } 
 ```
-2 word ( list) resposne per query. The index 0 response uses the probability model and the index 1 uses the spell checker
+2 word ( list) response per query. The index 0 response uses the probability model and the index 1 uses the spell checker
 
