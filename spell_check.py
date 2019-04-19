@@ -5,10 +5,10 @@ from flask import Flask, request
 from flask import jsonify
 from flask_restful import reqparse, abort, Api, Resource
 
-
+#### initialise the spellchecker obj
 spell = SpellChecker()
 
-# Build a dictionary, assuming Zipf's law and cost = -math.log(probability).
+# Build a dictionary, assuming standard distribution where the  cost = -math.log(probability).
 with open("words-by-frequency.txt") as f:
     words = [line.strip() for line in f.readlines()]
     wordcost = dict((k, log((i+1)*log(len(words)))) for i,k in enumerate(words))
@@ -43,7 +43,7 @@ def infer(s):
 app = Flask(__name__)
 api = Api(app)
 
-# argument parsing
+# argument parsing from request
 parser = reqparse.RequestParser()
 parser.add_argument('query')
 
@@ -56,10 +56,11 @@ class Predictquestion(Resource):
         # clean the user's query and make a spell check
         text_cleaned=(re.sub('[^a-zA-Z]+', '', user_query))
         
+        #### if only special chars or emoji values are entered
         if len(text_cleaned)==0:
             op='please enter a word'
             return jsonify(answer=op)
-        #### average english word length is 5 .. considered 20 after text 
+        #### average english word length is 5 .. considered 20 after text cleaning
         elif len(text_cleaned)>20:
             op='word too long'
             return jsonify(answer=op)
@@ -69,6 +70,7 @@ class Predictquestion(Resource):
             try:
                 op2=spell.correction(text_cleaned.lower())
             except:
+                #### exception occurs if the word is too complex and an OOM error is shown
                 op2='NaN'
             output=[op1,op2]
             return jsonify(answer=output)
