@@ -14,7 +14,7 @@ We also use a standard spell checker through the idea presented @ https://norvig
 
 ```
 EX 1
-curl -X GET http://0.0.0.0:8880//spellCorrect -d query="th e earthis round"
+curl -X GET http://0.0.0.0:8880/spellCorrect -d query="th e earthis round"
 
 response:
 {
